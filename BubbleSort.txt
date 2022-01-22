@@ -1,0 +1,60 @@
+Note*: In this code we have array of length 3. we have used the same code for our
+ project but for that we have initialized an array of length 8 in data memory module. 
+The length of array has been initialized in register[11] in register file (i.e x11).
+The instruction memory has been loaded with instructions from #Function Call.
+This code is tested and it perfectly sorts the array. It has been tested on http://www.kvakil.me/venus/.
+For running this on instruction meory we will replace lw by ld and sw by sd. Also, thes slli instruction
+would become slli x5, x4, 3 instead of slli x5, x4, 2 (shift by 3 not 2). 
+
+#setting up array of length 3
+addi x7, x0 ,4
+sw x7, 0x100(x0) 
+addi x7, x0 ,5
+sw x7, 0x104(x0)  
+addi x7, x0 ,6
+sw x7, 0x108(x0)  
+
+addi x10, x0, 0x100 #address of array a 
+addi x11, x0, 3     #length of array
+#jal x1, bubble
+#beq x0, x0, FinalExit
+
+
+#Function call
+bubble: 
+#base condition: if (len==0)
+beq x11, x0, FinalExit
+#jalr x0, 0(x1)
+ 
+addi x4, x0, 0   #initialize i  
+Loop1:
+    beq x4, x11, Exit1    #i==len then exit loop
+	add x19, x0, x4      #j = i
+    Loop2:
+    	beq x19, x11, Exit2     #j==len then exit loop
+	slli x5, x4, 2          #temp reg x5
+    	slli x6, x19, 2         #temp reg x6
+    	add x5, x5, x10         #address of a[i]
+        add x6, x6, x10         #address of a[j]
+
+        #copy a[i] and a[j] from memory in to temp registers
+
+        lw x28, 0(x5)
+        lw x29, 0(x6)
+        bge x28, x29, iterate    #if not a[i] >= [j]
+
+        add x27, x0, x28    #temp = a[i]
+        add x28, x0, x29    #a[i] = a[j]
+        add x29, x0, x27    #a[j] = temp
+
+        sw x28, 0(x5)
+        sw x29, 0(x6)
+
+        iterate: addi x19, x19, 1  #j+=1
+        beq x0, x0, Loop2
+    Exit2: addi x4, x4, 1   #i+=1
+    beq x0, x0, Loop1
+
+Exit1: beq x0, x0, FinalExit
+FinalExit: nop
+
