@@ -15,6 +15,7 @@ to overcome data hazards.
 Implement the pipeline version of RISC-V processor shown in Figure 1. Initialize all the pipeline registers to an appropriate size. The control values for the forwarding multiplexers are shown in Table 1. For each pipelined register, you can create a separate module. 
 Table 1. The control values for forwarding multiplexers.
 ![CA](https://user-images.githubusercontent.com/60126292/150654080-2c5705d7-8d7d-4e46-b429-ed047555ab9b.PNG)
+
 Refer to lecture slides in order to understand the behavior of forwarding unit,
 
 Verify the functionality of forwarding by introducing data dependencies in R-format instructions. Do not check the dependency of a load instruction result on the next instruction, as the architecture shown in Figure 1 does not support stalling to overcome certain type of data hazard.
@@ -22,3 +23,9 @@ Verify the functionality of forwarding by introducing data dependencies in R-for
 # For Task 2:
 You will be modifying this to include stalling and pipeline flushing. After these modifications, you will be able to test bubble sort algorithm on pipelined processor.
 ![CA1](https://user-images.githubusercontent.com/60126292/150654133-0c84de78-628f-459f-9c34-5bcb13ea415b.PNG)
+
+## Group Members:
+1. Alisha Momin – am05757
+2. Anmol Jumani – aj06198
+3. Sana Fatima – sf06199
+4. Syeda Areesha Najam – sn05985
